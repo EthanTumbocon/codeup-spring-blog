@@ -1,10 +1,12 @@
-package com.jupiter.springblog.controllers.models;
+package com.jupiter.springblog.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "posts")
 
 public class Post {
-    private String title;
-    private String body;
-    private long id;
+
 
     public Post() {
     }
@@ -14,6 +16,18 @@ public class Post {
         this.body = body;
         this.id = id;
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String body;
+
+    @Column(nullable = false, length = 10)
+    private String title;
+
+
 
     public String getTitle() {
         return title;
