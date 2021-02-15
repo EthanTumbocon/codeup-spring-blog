@@ -7,16 +7,6 @@ import javax.persistence.*;
 
 public class Post {
 
-
-    public Post() {
-    }
-
-    public Post(String title, String body, long id) {
-        this.title = title;
-        this.body = body;
-        this.id = id;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,6 +17,14 @@ public class Post {
     @Column(nullable = false, length = 10)
     private String title;
 
+    public Post() {
+    }
+
+    public Post(String title, String body, long id) {
+        this.title = title;
+        this.body = body;
+        this.id = id;
+    }
 
 
     public String getTitle() {
