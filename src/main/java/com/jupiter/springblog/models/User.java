@@ -1,4 +1,4 @@
-package com.jupiter.springblog;
+package com.jupiter.springblog.models;
 
 import javax.persistence.*;
 
