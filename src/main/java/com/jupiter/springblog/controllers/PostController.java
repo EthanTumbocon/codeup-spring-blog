@@ -2,9 +2,9 @@ package com.jupiter.springblog.controllers;
 
 
 import com.jupiter.springblog.models.Post;
-import com.jupiter.springblog.models.User;
 import com.jupiter.springblog.repositories.PostRepository;
 import com.jupiter.springblog.services.EmailService;
+import com.jupiter.springblog.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +15,16 @@ public class PostController {
 
     private final PostRepository postsDao;
     private final EmailService emailService;
+    private final UserService userService;
 
-    public PostController(PostRepository postsDao, EmailService emailService) {
+
+    public PostController(PostRepository postsDao, EmailService emailService, UserService userService) {
         this.postsDao = postsDao;
         this.emailService = emailService;
+        this.userService = userService;
     }
 
-    @GetMapping("/posts/jpa")
+    @GetMapping("/posts")
     @ResponseBody
     public List<Post> jpaIndex() {
         return postsDao.findAll();
@@ -46,10 +49,10 @@ public class PostController {
     public String createPost(@ModelAttribute Post post){
         return "Creating a new post...";
 
-        Post savePost = postsDao.save(post);
+        Post savedPost = postsDao.save(post);
 
-        String subject = "New Post Created!";
-        String body = "Dear" + savedPost.getUser.getUsername()
+        String subject = "New Post Created!" + savedPost.getTitle();
+        String body = "Dear " + savedPost.getUser.getUsername()
                 + ". Thank you for creating an ad. Your ad id is "
                 + savedPost.getId();
         emailService.prepareAndSend(savedPost, subject, body);
