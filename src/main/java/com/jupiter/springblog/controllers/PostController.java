@@ -25,9 +25,8 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    @ResponseBody
-    public List<Post> jpaIndex() {
-        return postsDao.findAll();
+    public String jpaIndex() {
+        return "posts/index";
     }
 
 
@@ -45,19 +44,17 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String createPost(@ModelAttribute Post post){
-        return "Creating a new post...";
+    public String createPost(@ModelAttribute Post post) {
 
         Post savedPost = postsDao.save(post);
 
         String subject = "New Post Created!" + savedPost.getTitle();
-        String body = "Dear " + savedPost.getUser.getUsername()
+        String body = "Dear " + savedPost.getUser().getUsername()
                 + ". Thank you for creating an ad. Your ad id is "
                 + savedPost.getId();
         emailService.prepareAndSend(savedPost, subject, body);
 
-        return"redirect:/posts";
+        return "redirect:/posts";
     }
 
 }

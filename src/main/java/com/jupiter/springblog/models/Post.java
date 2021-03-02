@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 public class Post {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -16,6 +17,11 @@ public class Post {
 
     @Column(nullable = false, length = 10)
     private String title;
+
+
+
+    @ManyToOne
+    private User user;
 
     public Post() {
     }
@@ -51,6 +57,13 @@ public class Post {
         this.id = id;
     }
 
-    public void setUser(User user) {
+    public User getUser() {
+        return user;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
 }
